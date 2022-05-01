@@ -24,9 +24,9 @@ default: &default
 development:
   <<: *default
   database: anime_development
-  username: <%= ENV["BASE_DATABASE_USER"] %>
-  password: <%= ENV["BASE_DATABASE_PASSWORD"] %>
-  host: <%= ENV["BASE_DATABASE_IPd"] %>
+  username: <%= ENV["DATABASE_USER"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  host: <%= ENV["DATABASE_IP"] %>
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
@@ -71,5 +71,5 @@ test:
 production:
   <<: *default
   database: anime_production
-  username: <%= ENV["BASE_DATABASE_USER"] %>
-  password: <%= ENV["BASE_DATABASE_PASSWORD"] %>
+  username: <%= ENV["DATABASE_USER"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
