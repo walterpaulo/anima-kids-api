@@ -6,26 +6,12 @@ class LoginController < ApplicationController
   end
 
   def logar
-    email, password = params_login
-    @user = Usuario.where(email: email)
-    return render json: {}, status: :forbidden if @user.empty?
-
-    @user = @user.first
-    confirm_password = BCrypt::Password.new(@user.password) == password
-
-    if confirm_password
-      time = params['login']['lembrar'] == '1' ? 1.year.from_now : 30.minutes.from_now
-      value = {
-        id: @user.id,
-        nome: @user.name,
-        email: @user.email
-      }
-
-      cookies[:home_adm] = { value: JsonWebToken.encode(value, time), httponly: true }
-      JsonWebToken
-      redirect_to root_path
-    else
-      mgs_error_login
+    debugger
+    @user = Usuario.find_by_email(params[:email])
+    if @user && @user.validar_password == params[:password]
+      token = encode_token({ user_id: @user.id})
+      user_tdo = UserTdo.new(name: @user.name, email: @user.email)
+      render json: { user: user_tdo, token: token }, status: :ok
     end
   end
 
