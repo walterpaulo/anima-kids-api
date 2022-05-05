@@ -1,9 +1,10 @@
 class UsuariosController < ApplicationController
   before_action :set_usuario, only: %i[ show update destroy ]
+  before_action :authorized, only: %i[ show create update destroy set_usuario]
 
   # GET /usuarios
   def index
-    render json: "API -"
+    render json: "API - ", status: :ok
   end
 
   # GET /usuarios/1
