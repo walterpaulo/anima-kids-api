@@ -29,7 +29,7 @@ class UsuariosController < ApplicationController
   # PATCH/PUT /usuarios/1
   def update
     if @usuario.update(usuario_params)
-      render json: @usuario
+      render json: UserTdo.new(id: @usuario.id, name: @usuario.name, email: @usuario.email)
     else
       render json: @usuario.errors, status: :unprocessable_entity
     end
@@ -44,6 +44,7 @@ class UsuariosController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_usuario
     @usuario = Usuario.find_by_id(params[:id])
+    return @usuario unless @usuario.blank?
     return render :not_found, :status => :not_found if @usuario.nil?
   end
 
