@@ -9,7 +9,7 @@ class LoginController < ApplicationController
     @user = Usuario.find_by_email(params[:email])
     if @user && @user.validar_password == params[:password]
       token = encode_token({ user_id: @user.id})
-      user_tdo = UserTdo.new(name: @user.name, email: @user.email)
+      user_tdo = UserTdo.new(id: @user.id, name: @user.name, email: @user.email)
       render json: { user: user_tdo, token: token }, status: :ok
     else
       render json: :errors, status: 401

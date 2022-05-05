@@ -1,6 +1,6 @@
 class UsuariosController < ApplicationController
   before_action :set_usuario, only: %i[ show update destroy ]
-  before_action :authorized, only: %i[ show create update destroy set_usuario]
+  before_action :authorized, only: %i[ show create update destroy]
 
   # GET /usuarios
   def index
