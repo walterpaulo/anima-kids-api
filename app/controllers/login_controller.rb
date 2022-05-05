@@ -11,6 +11,8 @@ class LoginController < ApplicationController
       token = encode_token({ user_id: @user.id})
       user_tdo = UserTdo.new(name: @user.name, email: @user.email)
       render json: { user: user_tdo, token: token }, status: :ok
+    else
+      render json: :errors, status: 401
     end
   end
 
