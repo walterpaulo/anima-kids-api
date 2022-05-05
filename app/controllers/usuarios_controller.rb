@@ -18,8 +18,9 @@ class UsuariosController < ApplicationController
     @user = Usuario.new(usuario_params)
 
     if @user.save
-      token = encode_token({user_id: @user.id})
-      render json: { user: @user, token: token}, status: :created, location: @user
+      token = encode_token({ user_id: @user.id })
+      user_tdo = UserTdo.new(name: @user.name, email: @user.email)
+      render json: { user: user_tdo, token: token }, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
     end
