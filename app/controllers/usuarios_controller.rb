@@ -3,14 +3,13 @@ class UsuariosController < ApplicationController
 
   # GET /usuarios
   def index
-    @usuarios = Usuario.all
-
-    render json: @usuarios
+    render json: "API -"
   end
 
   # GET /usuarios/1
   def show
-    render json: @usuario
+    user = UserTdo.new(id: @usuario.id, name: @usuario.name, email: @usuario.email)
+    render json: user
   end
 
   # POST /usuarios
@@ -19,7 +18,7 @@ class UsuariosController < ApplicationController
 
     if @user.save
       token = encode_token({ user_id: @user.id })
-      user_tdo = UserTdo.new(name: @user.name, email: @user.email)
+      user_tdo = UserTdo.new(id: @user.id, name: @user.name, email: @user.email)
       render json: { user: user_tdo, token: token }, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -43,7 +42,8 @@ class UsuariosController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_usuario
-    @usuario = Usuario.find(params[:id])
+    @usuario = Usuario.find_by_id(params[:id])
+    return render :not_found, :status => :not_found if @usuario.nil?
   end
 
   # Only allow a list of trusted parameters through.
