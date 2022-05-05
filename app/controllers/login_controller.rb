@@ -6,7 +6,6 @@ class LoginController < ApplicationController
   end
 
   def logar
-    debugger
     @user = Usuario.find_by_email(params[:email])
     if @user && @user.validar_password == params[:password]
       token = encode_token({ user_id: @user.id})
