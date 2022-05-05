@@ -15,12 +15,13 @@ class UsuariosController < ApplicationController
 
   # POST /usuarios
   def create
-    @usuario = Usuario.new(usuario_params)
+    @user = Usuario.new(usuario_params)
 
-    if @usuario.save
-      render json: @usuario, status: :created, location: @usuario
+    if @user.save
+      token = encode_token({user_id: @user.id})
+      render json: { user: @user, token: token}, status: :created, location: @user
     else
-      render json: @usuario.errors, status: :unprocessable_entity
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
